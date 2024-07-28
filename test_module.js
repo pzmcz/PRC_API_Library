@@ -1,2 +1,2 @@
 const erlcapi = require('./index.js');
-erlcapi.init('erlc')
+erlcapi.init('xdJEiEawIZ-oquyCdXCzdUzwfjakEzYTnjWkIRRlTZheqPKEVOh')
