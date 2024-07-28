@@ -1,5 +1,5 @@
 {
-  "name": "erlcapi",
+  "name": "@primsxzx/erlcapi",
   "version": "1.0.0",
   "description": "An ERLC API preset library used to manage ERLC API functions directly through an automated module",
   "main": "index.js",
@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/pzmcz/PRC_API_Library/issues"
   },
-  "homepage": "https://github.com/pzmcz/PRC_API_Library#readme"
+  "homepage": "https://github.com/pzmcz/PRC_API_Library#readme",
+  "dependencies": {
+    "axios": "^1.7.2"
+  }
 }
