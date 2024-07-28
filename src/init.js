@@ -18,7 +18,13 @@ const init = async function (apiKey) {
         console.error(error.message);
     }
 };
+const getPlayers = require('./functions/getPlayers.js');
+const searchPlayer = require('./functions/searchPlayer.js');
 
 module.exports = {
-    init
+    init,
+
+    // functionality
+    getPlayers,
+    searchPlayer,
 };

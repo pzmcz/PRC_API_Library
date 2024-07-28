@@ -9,7 +9,11 @@ const originalConsoleMethods = {
 
 function createPrefixedConsoleMethod(method) {
     return function(...args) {
-        originalConsoleMethods[method].apply(console, [PREFIX, ...args]);
+        if (args.some(arg => typeof arg === 'string' && arg.includes('You are being rate limited!'))) {
+            originalConsoleMethods[method].apply(console, [`${PREFIX} Rate limit exceeded. Please try again later.`]);
+        } else {
+            originalConsoleMethods[method].apply(console, [PREFIX, ...args]);
+        }
     };
 }
 
