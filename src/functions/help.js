@@ -1,5 +1,5 @@
 module.exports = async function () {
-    console.log('========= @primsxzx/erlcapi =========');
-    console.log('Help Menu')
-    console.log('- Documentation: ')
+    ErlcConsole.log('========= @primsxzx/erlcapi =========');
+    ErlcConsole.log('Help Menu')
+    ErlcConsole.log('- Documentation: ')
 };

@@ -10,12 +10,15 @@ winston.addColors({
 
 const customFormat = format.combine(
     format.timestamp({ format: 'YY-MM-DD HH:mm:ss' }),
-    format.printf(({ level, message, timestamp }) => {
-        let prefix = '[ERLC-API]:';
-        if (level === 'error') {
-            prefix = 'ERR!';
+    format.printf(({ level, message, timestamp, isErlcConsole }) => {
+        let prefix = '';
+        if (isErlcConsole) {
+            prefix = `[ERLC-API]: `;
         }
-        return `${timestamp} ${prefix} ${message}`;
+        if (level === 'error') {
+            prefix = 'ERR! ';
+        }
+        return `${timestamp} ${prefix}${message}`;
     })
 );
 
@@ -32,9 +35,11 @@ const logger = winston.createLogger({
     ]
 });
 
-console.log = (...args) => logger.info(...args);
-console.error = (...args) => logger.error(...args);
-console.warn = (...args) => logger.warn(...args);
-console.info = (...args) => logger.info(...args);
+const ErlcConsole = {
+    log: (...args) => logger.info({ message: args.join(' '), isErlcConsole: true }),
+    error: (...args) => logger.error({ message: args.join(' '), isErlcConsole: true }),
+    warn: (...args) => logger.warn({ message: args.join(' '), isErlcConsole: true }),
+    info: (...args) => logger.info({ message: args.join(' '), isErlcConsole: true }),
+};
 
-module.exports = logger;
+module.exports = { logger, ErlcConsole };

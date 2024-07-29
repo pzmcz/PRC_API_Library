@@ -5,7 +5,7 @@ const { saveDebugStatus, DEBUG } = require('../dist/managers/debugManager.js');
 
 const debugLog = (message) => {
     if (DEBUG() === true) {
-        console.log(`[DEBUG] ${message}`);
+        ErlcConsole.log(`[DEBUG] ${message}`);
     }
 };
 
@@ -13,7 +13,7 @@ const init = async function (apiKey, v) {
     try {
         await (saveDebugStatus(v ? true : false));
         debugLog('Found init.js module');
-        console.log('Validating API key...');
+        ErlcConsole.log('Validating API key...');
         const endpoint = 'server';
         debugLog('Running PRC.API server endpoint request');
         await axios.get(`${BASEURL}${endpoint}`, {
@@ -21,17 +21,17 @@ const init = async function (apiKey, v) {
         });
         debugLog('Running modules');
 
-        console.log('Saving API key to run data');
+        ErlcConsole.log('Saving API key to run data');
         debugLog('Saving API key for local use');
         await saveString(apiKey);
-        console.log('Successfully launched ERLC-API manager');
+        ErlcConsole.log('Successfully launched ERLC-API manager');
         debugLog('No errors found whilst loading');
         debugLog('Saved global debug status');
         debugLog('Logged into PRC api');
         debugLog('Ready for use!');
     } catch (error) {
-        if (error.message.includes('Request failed with status code 403')) { return console.log('Invalid API key provided') }
-        console.error(error.message);
+        if (error.message.includes('Request failed with status code 403')) { return ErlcConsole.log('Invalid API key provided') }
+        ErlcConsole.error(error.message);
     }
 };
 

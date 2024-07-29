@@ -25,13 +25,13 @@ const handleApiError = (err) => {
     if (err.response && err.response.status === 429) {
         return createError(429, 'You are being rate limited!');
     }
-    console.error(err.message);
+    ErlcConsole.error(err.message);
     return createError(500, 'Internal Server Error', err.message);
 };
 
 const debugLog = (message) => {
     if (DEBUG() === true) {
-        console.log(`[DEBUG] ${message}`);
+        ErlcConsole.log(`[DEBUG] ${message}`);
     }
 };
 

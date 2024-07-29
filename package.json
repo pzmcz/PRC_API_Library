@@ -2,7 +2,7 @@
   "name": "@primsxzx/erlcapi",
   "version": "1.0.2",
   "description": "An ERLC API preset library used to manage ERLC API functions directly through an automated module",
-  "main": "test_module.js",
+  "main": "index.js",
   "author": "pzmcz",
   "license": "GNU AGPL",
   "scripts": {

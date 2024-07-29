@@ -12,6 +12,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = myFunction;
 function myFunction() {
     return __awaiter(this, void 0, void 0, function* () {
-        console.log("hi");
+        ErlcConsole.log("hi");
     });
 }
