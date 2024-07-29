@@ -3,6 +3,7 @@ const { getString } = require('../managers/stringStore.js');
 const axios = require('axios');
 const path = require('path');
 const { DEBUG } = require('../../dist/managers/debugManager.js');
+const ErlcConsole = require('../console/console-wrapper.js');
 
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 

@@ -2,6 +2,7 @@ const { BASEURL } = require('./managers/index.js');
 const { saveString } = require('./managers/stringStore.js');
 const axios = require('axios');
 const { saveDebugStatus, DEBUG } = require('../dist/managers/debugManager.js');
+const ErlcConsole = require('./console/console-wrapper.js');
 
 const debugLog = (message) => {
     if (DEBUG() === true) {
