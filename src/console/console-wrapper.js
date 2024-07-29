@@ -1,25 +1,40 @@
-const PREFIX = '[ERLC-API]:';
+const winston = require('winston');
+const { format, transports } = winston;
 
-const originalConsoleMethods = {
-    log: console.log,
-    error: console.error,
-    warn: console.warn,
-    info: console.info
-};
+winston.addColors({
+    "info": 'green',
+    "warn": 'yellow',
+    "error": 'red',
+    "debug": 'cyan'
+});
 
-function createPrefixedConsoleMethod(method) {
-    return function(...args) {
-        if (args.some(arg => typeof arg === 'string' && arg.includes('You are being rate limited!'))) {
-            originalConsoleMethods[method].apply(console, [`${PREFIX} Rate limit exceeded. Please try again later.`]);
-        } else {
-            originalConsoleMethods[method].apply(console, [PREFIX, ...args]);
+const customFormat = format.combine(
+    format.timestamp({ format: 'YY-MM-DD HH:mm:ss' }),
+    format.printf(({ level, message, timestamp }) => {
+        let prefix = '[ERLC-API]:';
+        if (level === 'error') {
+            prefix = 'ERR!';
         }
-    };
-}
+        return `${timestamp} ${prefix} ${message}`;
+    })
+);
 
-console.log = createPrefixedConsoleMethod('log');
-console.error = createPrefixedConsoleMethod('error');
-console.warn = createPrefixedConsoleMethod('warn');
-console.info = createPrefixedConsoleMethod('info');
+const logger = winston.createLogger({
+    level: 'debug',
+    format: customFormat,
+    transports: [
+        new transports.Console({
+            format: format.combine(
+                format.colorize(),
+                customFormat
+            )
+        })
+    ]
+});
 
-module.exports = console;
+console.log = (...args) => logger.info(...args);
+console.error = (...args) => logger.error(...args);
+console.warn = (...args) => logger.warn(...args);
+console.info = (...args) => logger.info(...args);
+
+module.exports = logger;

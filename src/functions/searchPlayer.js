@@ -4,8 +4,12 @@ const axios = require('axios');
 
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
-module.exports = async function() {
-    let result;
-    while ((result = await getString()) === '') await sleep(100);
-    console.log("hi", result);
+module.exports = async function () {
+    while (await getString() === null) await sleep(100);
+    const apiKey = getString();
+
+    const endpoint = 'server/players';
+    return (await axios.get(`${BASEURL}${endpoint}`, {
+        headers: { 'Server-Key': apiKey }
+    }));
 };
