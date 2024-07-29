@@ -1,6 +1,6 @@
 {
   "name": "@primsxzx/erlcapi",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "An ERLC API preset library used to manage ERLC API functions directly through an automated module",
   "main": "test_module.js",
   "author": "pzmcz",
