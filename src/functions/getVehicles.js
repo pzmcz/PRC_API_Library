@@ -51,7 +51,7 @@ module.exports = async function () {
     
     try {
         const response = await Promise.race([
-            fetchApiData('server/players'),
+            fetchApiData('server/vehicles'),
             timeout(5000)
         ]);
         return handleApiResponse(response);

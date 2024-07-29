@@ -17,7 +17,7 @@ const createError = (code, message, note = '') => ({
 
 const handleApiError = (err) => {
     if (err === '404') {
-        return createError(404, 'Player not found', "The player couldn't be found!");
+        return createError(404, 'Vehicle not found', "The vehicle couldn't be found!");
     }
     if (err.message === 'Request timed out') {
         return createError(444, 'No Response', "This is usually because your API key is invalid and a response wasn't available");
@@ -70,15 +70,11 @@ module.exports = async function (string) {
         debugLog('Processing response data');
         const result = response.data.find(element => {
             try {
-                const Username = element.Player.split(':')[0].trim().toLowerCase();
-                const UserID = element.Player.split(':')[1].trim();
-                const Permission = element.Permission;
-                const Callsign = element.Callsign ? element.Callsign.toLowerCase() : '';
-                const Team = element.Team;
+                const Owner = element.Owner;
 
-                debugLog(`Checking element: Username=${Username}, UserID=${UserID}, Callsign=${Callsign}`);
+                debugLog(`Checking element: VehicleOwner=${Owner}`);
 
-                return [Username, UserID, Callsign].includes(LookupString);
+                return [Owner].includes(LookupString);
             } catch (err) {
                 debugLog(`Error processing element: ${err.message}`);
                 handleApiError('404 \n\nRaw:' + err);
@@ -87,14 +83,12 @@ module.exports = async function (string) {
         });
 
         if (result) {
-            const Username = result.Player.split(':')[0].trim();
-            const UserID = result.Player.split(':')[1].trim();
-            const Permission = result.Permission;
-            const Callsign = result.Callsign ? result.Callsign : '';
-            const Team = result.Team;
+            const Texture = result.Texture;
+            const Name = result.Name;
+            const Owner = result.Owner;
 
-            debugLog(`Found result: Username=${Username}, UserID=${UserID}, Callsign=${Callsign}, Team=${Team}`);
-            return { response: { code: 200 }, data: { Username, UserID, Permission, Callsign, Team } };
+            debugLog(`Checking element: VehicleOwner=${Owner}, VehicleName=${Name}, Texture=${Texture}`);
+            return { response: { code: 200 }, data: { Texture, Name, Owner } };
         } else {
             debugLog('No result found');
             return handleApiError('404');
