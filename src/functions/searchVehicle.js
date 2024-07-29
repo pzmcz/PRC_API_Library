@@ -71,11 +71,13 @@ module.exports = async function (string) {
         debugLog('Processing response data');
         const result = response.data.find(element => {
             try {
-                const Owner = element.Owner;
+                const Owner = element.Owner.split(':')[0].trim().toLowerCase();
+                const Name = element.Name;
+                const Texture = element.Texture;
 
                 debugLog(`Checking element: VehicleOwner=${Owner}`);
 
-                return Owner === string;
+                return [Owner, Name, Texture].includes(LookupString);
             } catch (err) {
                 debugLog(`Error processing element: ${err.message}`);
                 handleApiError('404 \n\nRaw:' + err);
